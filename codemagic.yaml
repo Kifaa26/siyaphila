@@ -1,22 +1,20 @@
 workflows:
-  flutter-ios-workflow:
-    name: Flutter iOS Workflow
+  native-ios-workflow:
+    name: Native iOS Workflow
     max_build_duration: 60
     instance_type: mac_mini_m1
-    working_directory: siyaphila
+    working_directory: Siyaphila-main/Siyaphila
     environment:
-      flutter: stable
       xcode: latest
       cocoapods: default
     scripts:
       - name: Set up code signing settings
         script: |
           xcode-project use-profiles
-      - name: Get Flutter packages
+      - name: Build Native iOS App
         script: |
-          flutter packages pub get
-      - name: Build Flutter iOS
-        script: |
-          flutter build ios --release --no-codesign
+          xcode-project build-ipa \
+            --project Siyaphila.xcodeproj \
+            --scheme Siyaphila
     artifacts:
-      - build/ios/iphoneos/*.app
+      - build/ios/ipa/*.ipa
